@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import { useEffect, useState } from "react";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
+import { SearchContex } from "../App";
 
-const Home = ({ searchValue }) => {
+const Home = () => {
+  const { searchValue } = useContext(SearchContex);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryId, setCatedoryId] = useState(0);
@@ -29,7 +31,11 @@ const Home = ({ searchValue }) => {
         return res.json();
       })
       .then((arr) => {
-        setItems(arr);
+        if (Array.isArray(arr)) {
+          setItems(arr);
+        } else {
+          setItems([]);
+        }
       })
       .finally(() => {
         setIsLoading(false);
