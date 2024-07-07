@@ -9,7 +9,6 @@ import { SearchContex } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId } from "../redux/slices/filterSlice.js";
 import axios from "axios";
-import { setItem } from "localforage";
 
 const Home = () => {
   const dispatch = useDispatch();
