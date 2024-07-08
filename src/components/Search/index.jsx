@@ -4,9 +4,10 @@ import debounce from "lodash.debounce";
 import { SearchContex } from "../../App";
 
 const Search = () => {
-  const { searchValue, setSearchValue } = useContext(SearchContex);
+  const { setSearchValue } = useContext(SearchContex);
   const [value, setValue] = useState("");
   const inputRef = useRef();
+
   const onClickClear = () => {
     setSearchValue("");
     setValue("");
