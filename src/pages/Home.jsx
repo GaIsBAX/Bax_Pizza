@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useRef } from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
@@ -38,21 +39,27 @@ const Home = () => {
     dispatch(setCurrentPage(number));
   };
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true);
 
     const sortBy = sort.sortProperty.replace("-", "");
     const order = sort.sortProperty.includes("-") ? "asc" : "desc";
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `&title=${searchValue}` : "";
-    axios
-      .get(
+
+    try {
+      const res = await axios.get(
         `https://6682d4e84102471fa4c865b3.mockapi.io/pizza?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
+      );
+      setItems(res.data);
+    } catch (error) {
+      alert("MockApi ERROR");
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+
+    window.scrollTo(0, 0);
   };
 
   // Если был первый рендер то проверяем url параметры и сохраняем их в редаксе
@@ -86,8 +93,6 @@ const Home = () => {
 
   // Если был первый рендер то запрашиваем все пиццы
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     if (!isSearch.current) {
       fetchPizzas();
     }
