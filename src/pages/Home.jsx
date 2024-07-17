@@ -15,7 +15,7 @@ import {
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice.js";
-import axios from "axios";
+import { fetchPizzas } from "../redux/slices/pizzasSlice.js";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -26,10 +26,9 @@ const Home = () => {
   const { categoryId, sort, currentPage } = useSelector(
     (state) => state.filter
   );
+  const { items, status } = useSelector((state) => state.pizzas);
 
   const { searchValue } = useContext(SearchContex);
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const onSortCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -39,25 +38,21 @@ const Home = () => {
     dispatch(setCurrentPage(number));
   };
 
-  const fetchPizzas = async () => {
-    setIsLoading(true);
-
+  const getPizzas = async () => {
     const sortBy = sort.sortProperty.replace("-", "");
     const order = sort.sortProperty.includes("-") ? "asc" : "desc";
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `&title=${searchValue}` : "";
 
-    try {
-      const res = await axios.get(
-        `https://6682d4e84102471fa4c865b3.mockapi.io/pizza?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
-      );
-      setItems(res.data);
-    } catch (error) {
-      alert("MockApi ERROR");
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(
+      fetchPizzas({
+        sortBy,
+        order,
+        category,
+        search,
+        currentPage,
+      })
+    );
 
     window.scrollTo(0, 0);
   };
@@ -94,7 +89,7 @@ const Home = () => {
   // Если был первый рендер то запрашиваем все пиццы
   useEffect(() => {
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
 
     isSearch.current = false;
@@ -112,7 +107,20 @@ const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? sceletons : pizzas}</div>
+      {status === "error" ? (
+        <div className="content__error-info">
+          <h2>Error</h2>
+          <p>
+            Не получилось получиться пиццы <br />
+            Повторите попытку позже
+          </p>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === "loading" ? sceletons : pizzas}
+        </div>
+      )}
+
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
