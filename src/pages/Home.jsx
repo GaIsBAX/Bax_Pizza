@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import Sort, { list } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
@@ -23,9 +23,9 @@ const Home = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const { categoryId, sort, currentPage,searchValue } = useSelector(selectFilter);
+  const { categoryId, sort, currentPage, searchValue } =
+    useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
-
 
   const onSortCategory = (id) => {
     dispatch(setCategoryId(id));

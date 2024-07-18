@@ -39,7 +39,7 @@ const cartSlice = createSlice({
         return obj.price * obj.count + sum;
       }, 0);
     },
-    clearItems(state, action) {
+    clearItems(state) {
       state.items = [];
       state.totalPrice = 0;
     },
