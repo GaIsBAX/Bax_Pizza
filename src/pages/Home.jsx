@@ -8,14 +8,14 @@ import { useEffect, useState } from "react";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
-import { SearchContex } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  selectFilter,
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice.js";
-import { fetchPizzas } from "../redux/slices/pizzasSlice.js";
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice.js";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -23,12 +23,9 @@ const Home = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const { categoryId, sort, currentPage } = useSelector(
-    (state) => state.filter
-  );
-  const { items, status } = useSelector((state) => state.pizzas);
+  const { categoryId, sort, currentPage,searchValue } = useSelector(selectFilter);
+  const { items, status } = useSelector(selectPizzaData);
 
-  const { searchValue } = useContext(SearchContex);
 
   const onSortCategory = (id) => {
     dispatch(setCategoryId(id));
