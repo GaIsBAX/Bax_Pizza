@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef } from "react";
+import { FC, useRef } from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import Sort, { list } from "../components/Sort";
@@ -17,7 +17,7 @@ import {
 } from "../redux/slices/filterSlice.js";
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice.js";
 
-const Home = () => {
+const Home: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);
@@ -27,11 +27,11 @@ const Home = () => {
     useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
 
-  const onSortCategory = (id) => {
+  const onSortCategory = (id: number) => {
     dispatch(setCategoryId(id));
   };
 
-  const onChangePage = (number) => {
+  const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
 
@@ -42,6 +42,7 @@ const Home = () => {
     const search = searchValue ? `&title=${searchValue}` : "";
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
@@ -95,7 +96,7 @@ const Home = () => {
   const sceletons = [...new Array(6)].map((_, index) => (
     <Sceleton key={index} />
   ));
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
   return (
     <div className="container">

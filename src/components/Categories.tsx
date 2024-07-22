@@ -1,4 +1,11 @@
-const Categories = ({ value, onSortCategory }) => {
+import { FC } from "react";
+
+type CategoriesPropr = {
+  value: number;
+  onSortCategory: any;
+};
+
+const Categories: FC<CategoriesPropr> = ({ value, onSortCategory }) => {
   const categories = [
     "Все",
     "Мясные",
