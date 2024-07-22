@@ -2,19 +2,17 @@ import { FC } from "react";
 
 type CategoriesPropr = {
   value: number;
-  onSortCategory: any;
+  onSortCategory: (index: number) => void;
 };
-
+const categories = [
+  "Все",
+  "Мясные",
+  "Вегетарианская",
+  "Гриль",
+  "Острые",
+  "Закрытые",
+];
 const Categories: FC<CategoriesPropr> = ({ value, onSortCategory }) => {
-  const categories = [
-    "Все",
-    "Мясные",
-    "Вегетарианская",
-    "Гриль",
-    "Острые",
-    "Закрытые",
-  ];
-
   return (
     <div className="categories">
       <ul>

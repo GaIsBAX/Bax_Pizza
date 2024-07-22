@@ -1,4 +1,11 @@
-import { FC, useCallback, useContext, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import styles from "./styles.module.scss";
 import debounce from "lodash.debounce";
 import { useDispatch } from "react-redux";
@@ -22,7 +29,7 @@ const Search: FC = () => {
     []
   );
 
-  const onChangeInput = (event: any) => {
+  const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
