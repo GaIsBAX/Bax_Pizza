@@ -10,16 +10,22 @@ import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  FilterSliceState,
   selectFilter,
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice.js";
-import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice.js";
+import {
+  fetchPizzas,
+  FetchPizzasArgs,
+  selectPizzaData,
+} from "../redux/slices/pizzasSlice.js";
+import { useAppDispatch } from "../redux/store";
 
 const Home: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
@@ -42,7 +48,6 @@ const Home: FC = () => {
     const search = searchValue ? `&title=${searchValue}` : "";
 
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
@@ -58,12 +63,17 @@ const Home: FC = () => {
   // Если был первый рендер то проверяем url параметры и сохраняем их в редаксе
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
+      const params = qs.parse(
+        window.location.search.substring(1)
+      ) as unknown as FetchPizzasArgs;
+      const sort = list.find((obj) => obj.sortProperty === params.sortBy);
+
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          searchValue: params.search,
+          categoryId: Number(params.category),
+          currentPage: Number(params.currentPage),
+          sort: sort || list[0],
         })
       );
       isSearch.current = true;
