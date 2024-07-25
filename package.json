@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.2.6",
     "@types/lodash.debounce": "^4.0.9",
     "@types/qs": "^6.9.15",
+    "ahooks": "^3.8.0",
     "axios": "^1.7.2",
     "localforage": "^1.10.0",
     "lodash.debounce": "^4.0.8",

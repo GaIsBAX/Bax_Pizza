@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, memo, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectSort,
@@ -21,8 +21,11 @@ export const list: SortItem[] = [
   { name: "алфавиту (ASC)", sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-const SortPopup: FC = () => {
-  const sort = useSelector(selectSort);
+type SortPopupProps = {
+  value: Sort;
+};
+
+const SortPopup: FC<SortPopupProps> = memo(({ value }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
@@ -64,7 +67,7 @@ const SortPopup: FC = () => {
             setOpen(!open);
           }}
         >
-          {sort.name}
+          {value.name}
         </span>
       </div>
       {open && (
@@ -77,7 +80,7 @@ const SortPopup: FC = () => {
                   onClickListItem(obj);
                 }}
                 className={
-                  sort.sortProperty === obj.sortProperty ? "active" : ""
+                  value.sortProperty === obj.sortProperty ? "active" : ""
                 }
               >
                 {obj.name}
@@ -88,6 +91,6 @@ const SortPopup: FC = () => {
       )}
     </div>
   );
-};
+});
 
 export default SortPopup;

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, useRef } from "react";
+import { FC, useCallback, useRef } from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import Sort, { list } from "../components/Sort";
@@ -33,9 +33,9 @@ const Home: FC = () => {
     useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
 
-  const onSortCategory = (id: number) => {
+  const onSortCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, []);
 
   const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
@@ -112,7 +112,7 @@ const Home: FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories onSortCategory={onSortCategory} value={categoryId} />
-        <Sort />
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (

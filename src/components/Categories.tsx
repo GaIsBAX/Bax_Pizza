@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo, useMemo } from "react";
 
 type CategoriesPropr = {
   value: number;
@@ -12,7 +12,7 @@ const categories = [
   "Острые",
   "Закрытые",
 ];
-const Categories: FC<CategoriesPropr> = ({ value, onSortCategory }) => {
+const Categories: FC<CategoriesPropr> = memo(({ value, onSortCategory }) => {
   return (
     <div className="categories">
       <ul>
@@ -28,6 +28,6 @@ const Categories: FC<CategoriesPropr> = ({ value, onSortCategory }) => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;
