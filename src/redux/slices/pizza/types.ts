@@ -7,9 +7,6 @@ export type Pizza = {
   imageUrl: string;
 };
 
-
-
-
 export enum Status {
   LOADING = "loading",
   SUCCESS = "success",
@@ -22,10 +19,9 @@ export interface PizzaSliceState {
 }
 
 export type FetchPizzasArgs = {
-    sortBy: string;
-    order: string;
-    category: string;
-    search: string;
-    currentPage: number;
-  };
-
+  sortBy: string;
+  order: string;
+  category: string;
+  search: string;
+  currentPage: number;
+};

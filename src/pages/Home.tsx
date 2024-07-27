@@ -14,11 +14,11 @@ import {
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filter/filterSlice";
-import { fetchPizzas } from "../redux/slices/pizza/pizzasSlice.js";
 import { useAppDispatch } from "../redux/store";
 import { FetchPizzasArgs } from "../redux/slices/pizza/types";
 import { selectPizzaData } from "../redux/slices/pizza/selectors";
 import { selectFilter } from "../redux/slices/filter/selectors";
+import { fetchPizzas } from "../redux/slices/pizza/asyncActions";
 
 const Home: FC = () => {
   const navigate = useNavigate();
