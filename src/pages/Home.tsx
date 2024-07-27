@@ -10,18 +10,15 @@ import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  FilterSliceState,
-  selectFilter,
   setCategoryId,
   setCurrentPage,
   setFilters,
-} from "../redux/slices/filterSlice.js";
-import {
-  fetchPizzas,
-  FetchPizzasArgs,
-  selectPizzaData,
-} from "../redux/slices/pizzasSlice.js";
+} from "../redux/slices/filter/filterSlice";
+import { fetchPizzas } from "../redux/slices/pizza/pizzasSlice.js";
 import { useAppDispatch } from "../redux/store";
+import { FetchPizzasArgs } from "../redux/slices/pizza/types";
+import { selectPizzaData } from "../redux/slices/pizza/selectors";
+import { selectFilter } from "../redux/slices/filter/selectors";
 
 const Home: FC = () => {
   const navigate = useNavigate();

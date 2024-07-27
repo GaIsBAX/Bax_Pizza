@@ -10,7 +10,7 @@ import {
 import styles from "./styles.module.scss";
 import debounce from "lodash.debounce";
 import { useDispatch } from "react-redux";
-import { setSearchValue } from "../../redux/slices/filterSlice";
+import { setSearchValue } from "../../redux/slices/filter/filterSlice";
 
 const Search: FC = memo(() => {
   const dispatch = useDispatch();
