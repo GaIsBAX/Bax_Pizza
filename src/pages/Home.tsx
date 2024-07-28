@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { FC, useCallback, useRef } from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ import { useEffect } from "react";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   setCategoryId,
   setCurrentPage,
