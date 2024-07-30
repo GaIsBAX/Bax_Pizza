@@ -3,12 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../components/CartItem";
 import { clearItems } from "../redux/slices/cart/cartSlice";
 import CartEmpty from "../components/CartEmpty";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { selectCart } from "../redux/slices/cart/selectors";
 
 const Cart: FC = () => {
   const dispatch = useDispatch();
   const { totalPrice, items } = useSelector(selectCart);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = (event) => {
+      setWidth(event.target.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const totalCount = items.reduce(
     (sum: number, item: any) => sum + item.count,
@@ -23,6 +34,10 @@ const Cart: FC = () => {
 
   if (!totalPrice) {
     return <CartEmpty />;
+  }
+
+  if (width <= 768) {
+    return <h1>адаптация для мобильных устройст еще не готова</h1>;
   }
 
   return (
